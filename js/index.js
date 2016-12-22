@@ -40,7 +40,6 @@ class Btn extends React.Component{
     let token = this.props.params.token;
     let username =this.props.params.username;
 
-    console.log("username: ", username, "token: ", token);
     localStorage['username']=username;
     localStorage['token'] = token;
     

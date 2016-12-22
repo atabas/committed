@@ -49,7 +49,7 @@ passport.use(new GitHubStrategy({
     callbackURL: "http://localhost:8080/auth/github/callback"
   },
   function(accessToken, refreshToken, profile, cb) {
-    User.findOneAndUpdate({ githubId: profile.id },{$set:{githubId:profile.id, name: profile.displayName, username: profile.username, userAccessToken: accessToken}}, {new: true, upsert:true}, function (err, user) {
+    User.findOneAndUpdate({ githubId: profile.id },{$set:{githubId:profile.id, name: profile.displayName, username: profile.username, email: profile._json.email, userAccessToken: accessToken}}, {new: true, upsert:true}, function (err, user) {
       return cb(err, user);
     });
   }
@@ -68,13 +68,12 @@ passport.serializeUser(function(user, cb) {
 passport.deserializeUser(function(obj, cb) {
   User.findById(obj,function(err, data){
     cb(null, data);
-    console.log("deserialized user: ",data);
   });
 });
 
 
 app.get('/auth/github',
-  passport.authenticate('github', { scope: 'repo' }));
+  passport.authenticate('github', { scope: ["repo","user:email"] }));
 
 app.get('/auth/github/callback', 
   passport.authenticate('github', { failureRedirect: '/login' }),
