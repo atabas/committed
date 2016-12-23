@@ -4,7 +4,10 @@ var request = require('request');
 var moment = require('moment');
 var whilst = require('async/whilst');
 var nodemailer = require('nodemailer');
-require('dotenv').config();
+
+if(process.env.NODE_ENV !== 'production' ){
+  require('dotenv').config();
+}
 var config = require('../config');
 
 var j = schedule.scheduleJob('00 43 18 * * *', function(){

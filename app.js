@@ -4,9 +4,12 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
-require('dotenv').config();
+if(process.env.NODE_ENV !== 'production' ){
+  require('dotenv').config();
+}
 
 var config = require('./config');
+
 var passport = require('passport');
 var User = require('./models/user');
 
