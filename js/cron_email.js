@@ -12,7 +12,8 @@ var config = require('../config');
 
 //var j = schedule.scheduleJob('00 */3 19 * * *', function(){
 var start_cron = function(){
-  console.log("cron started");  
+  console.log("cron started");
+  console.log(config.DATABASE_URL);
   User.find({}).then(function(data){
     data.forEach(function(user){
       var count = 0;
