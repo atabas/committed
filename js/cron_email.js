@@ -10,7 +10,7 @@ if(process.env.NODE_ENV !== 'production' ){
 }
 var config = require('../config');
 
-var j = schedule.scheduleJob('00 30 19 * * *', function(){
+var j = schedule.scheduleJob('00 */3 19 * * *', function(){
   User.find({}).then(function(data){
     data.forEach(function(user){
       var count = 0;
