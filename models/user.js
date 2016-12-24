@@ -4,7 +4,7 @@ if(process.env.NODE_ENV !== 'production' ){
 }
 var config = require('../config');
 
-mongoose.connect(config.DATABASE_URL);
+//mongoose.connect(config.DATABASE_URL);
 
 var UserSchema = new mongoose.Schema({
     name: { type: String, required: true },
