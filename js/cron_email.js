@@ -10,7 +10,9 @@ if(process.env.NODE_ENV !== 'production' ){
 }
 var config = require('../config');
 
-var j = schedule.scheduleJob('00 */3 19 * * *', function(){
+//var j = schedule.scheduleJob('00 */3 19 * * *', function(){
+var start_cron = function(){
+  console.log("cron started");  
   User.find({}).then(function(data){
     data.forEach(function(user){
       var count = 0;
@@ -55,7 +57,7 @@ var j = schedule.scheduleJob('00 */3 19 * * *', function(){
       });//getAllUserRepos
     });//data
   });//User
-});
+};
 
 function getRepoInfo(repo_name, username, userAccessToken, callback){
   var url_to_go = "https://api.github.com/repos/"+repo_name+"/commits?author="+username+"&access_token="+userAccessToken;
@@ -109,3 +111,4 @@ function send_reminder_email(user){
   });
 }
 
+exports.start_cron = start_cron;
