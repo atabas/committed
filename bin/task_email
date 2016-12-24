@@ -1,0 +1,4 @@
+#!/usr/bin/env node
+process.env.NODE_ENV='production'
+var cron_email= require('../js/cron_email');
+cron_email.start_cron();
