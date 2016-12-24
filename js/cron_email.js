@@ -42,7 +42,8 @@ var start_cron = function(){
                     updateUserInfo(user._id, true);
                     found = true;
                     console.log("---------WOO YOU HAVE BEEN UPDATED !-----------")
-                    callback(null, count);
+                    // Testing by commenting out
+                    //callback(null, count);
                   }
                   else{
                     callback(null, count);
