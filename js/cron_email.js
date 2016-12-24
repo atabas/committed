@@ -13,8 +13,11 @@ var config = require('../config');
 //var j = schedule.scheduleJob('00 */3 19 * * *', function(){
 var start_cron = function(){
   console.log("cron started");
-  console.log(config.DATABASE_URL);
+  //console.log(config.DATABASE_URL);
+  //console.log(User.find({}));
+
   User.find({}).then(function(data){
+    console.log("users");
     data.forEach(function(user){
       var count = 0;
       var found = false;
@@ -22,16 +25,18 @@ var start_cron = function(){
       getAllUserRepos(user.username, user.userAccessToken, function(error, response, body) {  
         if (!error && response.statusCode == 200) {
           var info = JSON.parse(body);
+          //console.log("count of repos is: ", info.length);
           whilst(
             function() { return count < (info.length)-1 && count < 50 && found == false; },
             function(callback) {
               try{
                 getRepoInfo(info[count].full_name, user.username, user.userAccessToken, function(error, response, body) {
                   count++;
-                  if (!body){
+                  if (!body || body=='[]'){
                     return callback(null, count);
                   }
                   var single_repo = JSON.parse(body);
+                  //console.log("user is:",user.username ," and single repo is:::" ,single_repo[0]);
 
                   if(moment(single_repo[0].commit.author.date).isSame(new Date(),'day' )){
                     updateUserInfo(user._id, true);
@@ -40,7 +45,6 @@ var start_cron = function(){
                     callback(null, count);
                   }
                   else{
-                    
                     callback(null, count);
                   }
                 });//getRepoInfo 
@@ -92,6 +96,7 @@ function updateUserInfo(id, status){
 }
 
 function send_reminder_email(user){
+  console.log("------email pass is --------", config.EMAIL_PASSWORD);
   // create reusable transporter object using the default SMTP transport
   var transporter = nodemailer.createTransport('smtps://anika01%40gmail.com:'+config.EMAIL_PASSWORD+'@smtp.gmail.com');
 
