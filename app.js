@@ -49,7 +49,7 @@ passport.use(strategy);
 passport.use(new GitHubStrategy({
     clientID: config.GITHUB_CLIENT_ID,
     clientSecret: config.GITHUB_CLIENT_SECRET,
-    callbackURL: "http://localhost:8080/auth/github/callback"
+    callbackURL: config.CALLBACK_URL
   },
   function(accessToken, refreshToken, profile, cb) {
     User.findOneAndUpdate({ githubId: profile.id },{$set:{githubId:profile.id, name: profile.displayName, username: profile.username, email: profile._json.email, userAccessToken: accessToken}}, {new: true, upsert:true}, function (err, user) {
