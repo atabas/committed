@@ -4,7 +4,7 @@ if(process.env.NODE_ENV !== 'production' ){
 }
 var config = require('../config');
 
-//mongoose.connect(config.DATABASE_URL);
+var db = mongoose.createConnection(config.DATABASE_URL);
 
 var UserSchema = new mongoose.Schema({
     name: { type: String, required: true },
@@ -16,6 +16,6 @@ var UserSchema = new mongoose.Schema({
     status: {type: Boolean}
 });
 
-var User = mongoose.model('User', UserSchema);
+var User = db.model('User', UserSchema);
 
 module.exports = User;

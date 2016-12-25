@@ -19,13 +19,13 @@ var start_cron = function(){
   User.find({}).then(function(data){
     console.log("users");
     data.forEach(function(user){
+      console.log(user.username);
       var count = 0;
       var found = false;
   
       getAllUserRepos(user.username, user.userAccessToken, function(error, response, body) {  
         if (!error && response.statusCode == 200) {
           var info = JSON.parse(body);
-          //console.log("count of repos is: ", info.length);
           whilst(
             function() { return count < (info.length)-1 && count < 50 && found == false; },
             function(callback) {
@@ -36,7 +36,6 @@ var start_cron = function(){
                     return callback(null, count);
                   }
                   var single_repo = JSON.parse(body);
-                  //console.log("user is:",user.username ," and single repo is:::" ,single_repo[0]);
 
                   if(moment(single_repo[0].commit.author.date).isSame(new Date(),'day' )){
                     updateUserInfo(user._id, true);
