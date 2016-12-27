@@ -13,13 +13,10 @@ var config = require('../config');
 //var j = schedule.scheduleJob('00 */3 19 * * *', function(){
 var start_cron = function(){
   console.log("cron started");
-  //console.log(config.DATABASE_URL);
-  //console.log(User.find({}));
 
   User.find({}).then(function(data){
     console.log("users");
     data.forEach(function(user){
-      console.log(user.username);
       var count = 0;
       var found = false;
   
@@ -96,7 +93,6 @@ function updateUserInfo(id, status){
 }
 
 function send_reminder_email(user){
-  console.log("------email pass is --------", config.EMAIL_PASSWORD);
   // create reusable transporter object using the default SMTP transport
   var transporter = nodemailer.createTransport('smtps://anika01%40gmail.com:'+config.EMAIL_PASSWORD+'@smtp.gmail.com');
 
